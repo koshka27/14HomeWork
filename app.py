@@ -19,7 +19,7 @@ def main():
     def search_by_title(title):
         query = ("SELECT title, country, release_year, listed_in AS genre, description "
                  "FROM netflix "
-                 "WHERE title = '{title}' "
+                 f"WHERE title = '{title}' "
                  "ORDER BY release_year DESC "
                  "LIMIT 1 ")
         response = db_connect(query)[0]
@@ -36,7 +36,7 @@ def main():
     def search_by_period(start, end):
         query = ("SELECT title, release_year "
                  "FROM netflix "
-                 "WHERE release_year BETWEEN {start} AND {end} "
+                 f"WHERE release_year BETWEEN {start} AND {end} "
                  "ORDER BY release_year "
                  "LIMIT 100 ")
         response = db_connect(query)
@@ -63,7 +63,7 @@ def main():
 
         query = ("SELECT title, rating, description "
                  "FROM netflix "
-                 "WHERE rating IN ({level}) ")
+                 f"WHERE rating IN ({level}) ")
         response = db_connect(query)
         response_json = []
         for movie in response:
@@ -79,7 +79,7 @@ def main():
     def search_by_genre(genre):
         query = ("SELECT title, description "
                  "FROM netflix "
-                 "WHERE listed_in LIKE '%{genre}%' "
+                 f"WHERE listed_in LIKE '%{genre}%' "
                  "ORDER BY release_year "
                  "LIMIT 10 ")
         response = db_connect(query)
@@ -94,8 +94,8 @@ def main():
     def get_actors(name1='Rose McIver', name2='BEN Lamb'):
         query = ("SELECT 'cast' "
                  "FROM netflix "
-                 "WHERE 'cast' LIKE '%{name1}%' "
-                 "AND 'cast' LIKE '%{name2}%' ")
+                 f"WHERE 'cast' LIKE '%{name1}%' "
+                 f"AND 'cast' LIKE '%{name2}%' ")
         response = db_connect(query)
         actors = []
         for cast in response:
@@ -110,9 +110,9 @@ def main():
 
     def get_movies(type_movie='Movie', release_year=2016, genre='Dramas'):
         query = ("SELECT title, description, 'type' FROM netflix "
-                 "WHERE 'type' = '{type_movie}'"
-                 "AND release_year = {release_year} "
-                 "AND listed_in LIKE '%{genre}%' ")
+                 f"WHERE 'type' = '{type_movie}'"
+                 f"AND release_year = {release_year} "
+                 f"AND listed_in LIKE '%{genre}%' ")
         response = db_connect(query)
         response_json = []
         for movie in response:
